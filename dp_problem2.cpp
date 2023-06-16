@@ -37,33 +37,25 @@ bool rec(int level, int left) // will give 0 or 1 on the basis of whether a suba
     }
 
     // cache check
-    if (dp[level][left] = !-1)
+    if (dp[level][left] != -1)
     {
         return dp[level][left];
     }
+    int ans = 0;
+    if (rec(level + 1, left))
+    {
+        ans = 1;
+    }
+    else if (rec(level + 1, left - items[level]))
+    {
+        ans = 1;
+    }
 
-    // compute/transition
-    // take
-    if (left == 0)
-    {
-        return 1;
-    }
-    else
-    {
-        if (left - items[level] <= 0)
-        {
-            return dp[level + 1][left - items[level]];
-        }
-        // not take
-        else
-        {
-            return dp[level + 1, left];
-        }
-    }
+    return dp[level][left] = ans;
 }
 void printset(int level, int left)
 {
-
+    // cout << "printer : " << level << " " << left << endl;
     // base case
     if (level == n)
     {
@@ -71,22 +63,14 @@ void printset(int level, int left)
     }
 
     // transition printing
-    if (left == 0)
+    if (rec(level + 1, left))
     {
-        return;
+        printset(level+1,left);
     }
-    else
+    else if (rec(level + 1, left - items[level]))
     {
-        if (left - items[level] <= 0) // taking
-        {
-            // return dp[level + 1][left - items[level]];
-            cout << items[level] << " ";
-        }
-        else // not taking
-        {
-            // return dp[level + 1, left];
-            return;
-        }
+        cout<<items[level]<<" ";
+        printset(level+1,left-items[level]);
     }
 }
 
