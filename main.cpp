@@ -89,113 +89,68 @@ void ppq(priority_queue<T> g)
   }
   cout << "\n";
 }
-vector<char> revString(vector<char> s)
+int n;
+int items[101];
+int dp[101][1001000];
+int t;
+
+bool rec(int level, int sum) // will give 0 or 1 on the basis of whether a subarray can be formedd in [level...n-1]
 {
-  int n = s.size();
-  vector<char> sol(n);
-  fr(n)
+
+  // pruning case
+  if (sum > t)
   {
-    if (s[i] == '(')
-    {
-      // cout<<"ha";
-      sol[i] = ')';
-    }
-    else if (s[i] == ')')
-    {
-      sol[i] = '(';
-    }
+    return 0;
   }
-  return sol;
-}
-int isValid(vector<char> s)
-{
-  int size = s.size();
-  int sum = 0;
-  int flag = 0;
-  fr(size)
+
+  // base case
+  if (level == n)
   {
-    if (s[i] == '(')
+    if (sum == t)
     {
-      sum++;
+      return 1;
     }
     else
     {
-      sum--;
-      if (sum < 0)
-      {
-        // break;
-        flag = 1;
-      }
+      return 0;
     }
   }
-  if (sum == 0)
+
+  // cache check
+  if (dp[level][sum]=!-1)
   {
-    if (!flag)
-    {
-      return 1; // is a good array ans is yes
-    }
-    else
-    {
-      return 2; // not good array ans is yes
-    }
+    return dp[level][sum];
+  }
+
+  // compute/transition
+  // take
+  if (sum == t)
+  {
+    return 1;
   }
   else
   {
-    return 3; // sum is not zero so not ans is no
+    if (sum + items[level] <= t)
+    {
+      return dp[level + 1][sum + items[level]];
+    }
+    // not take
+    else
+    {
+      return dp[level + 1, sum];
+    }
   }
 }
-
 void solve()
 {
-  int n;
   cin >> n;
-  vector<char> s(n);
-  fr(n)
+  for (int i = 0; i < n; i++)
   {
-    cin >> s[i];
+    cin >> items[i];
   }
-  vector<char> revs;
-  revs = revString(s);
-  map<char, int> mp = {{'(', 1}, {')', -1}};
-  if (isValid(s) == 1 || isValid(revs) == 1)
-  {
-    cout << 1 << endl;
-    while (n--)
-    {
-      cout << 1 << " ";
-    }
-    cout << endl;
-  }
-  else if (isValid(s) == 2 || isValid(revs) == 2)
-  {
-    int sum = 0;
-    cout << 2 << endl;
-    int prev;
-    fr(n)
-    {
-      sum += mp[s[i]];
-      if (sum > 0)
-      {
-        cout << "1"
-             << " ";
-        prev = 1;
-      }
-      else if (sum < 0)
-      {
-        cout << 2 << " ";
-        prev = 2;
-      }
-      else
-      {
-        cout << prev << " ";
-      }
-    }
-    cout << endl;
-  }
-  else if (isValid(s) == 3)
-  {
-    cout << -1 << endl;
-  }
+  cin >> t;
+  memset(dp,-1,sizeof(dp));
+  cout << rec(0, 0) << endl;
 }
 signed main()
 {
