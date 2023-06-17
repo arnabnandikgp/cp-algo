@@ -32,16 +32,15 @@ int rec(int level, int last) // will return the value of LIS from index [level..
         return dp[level, last];
     }
 
-    int ans = 1;
+    int ans = -1e9;
     // compute/transition
     // taking
     if (arr[level] > arr[last])
     {
-        ans = 1 + rec(level + 1, arr[level]);
+        ans = 1 + rec(level + 1, level);
     }
     // not taking
-
-    ans = max(ans, rec(level + 1, arr[last]));
+    ans = max(ans, rec(level + 1, last));
 
     // save and return ans
     return dp[level, last] = ans;
