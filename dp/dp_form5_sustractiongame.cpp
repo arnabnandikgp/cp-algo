@@ -30,8 +30,10 @@ bool rec(int x) // return whether the person going to play now will win or not w
     for (int p = 1; (1 << p) <= x; p++)
     {
         if (rec(x - p) == 0)
+        {
             ans = 1;
-        break;
+            break;
+        }
     }
 
     // return and save
@@ -42,6 +44,7 @@ bool rec(int x) // return whether the person going to play now will win or not w
 void solve()
 {
     cin >> n;
+    int a,b;
     cin >> a >> b;
     memset(dp, -1, sizeof(dp));
     cout << rec(n);

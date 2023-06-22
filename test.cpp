@@ -89,33 +89,89 @@ void ppq(priority_queue<T> g)
     }
     cout << "\n";
 }
-#include <algorithm>
 void solve()
 {
     int n;
-  cin >> n;
-  vector<char> s(n+1);
-  fr(n)
-  {
-    cin >> s[i];
-    cout<<s[i];
-  }
-  cout<<endl;
-  for (int i = 1; i < s.size(); i++)
-  {
-    cout << s[i] ;
-  }
+    cin >> n;
+    set<int> st;
+    unordered_map<int, int> mp;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> v[i];
+        // if (mp.find(v[i]) == mp.end())
+        // {
+        //     mp[v[i]] = 1;
+        // }
 
-  cout << "\n";
+        // // Else update the frequency
+        // else
+        // {
+        //     mp[v[i]]++;
+        // }
+        // mp[v[i]]++;
+        st.insert(v[i]);
+    }
+    // cout<<"ha";
+    // for (auto r : st)
+    // {
+    //     cout << r << endl;
+    // }
+    sort(v.begin(), v.end());
+    // for (auto k : v)
+    // {
+    //     cout << k << " ";
+    // }
+    // cout << endl;
+
+    int last = v[n - 1];
+    int expsum = 0;
+    for (auto it : st)
+    {
+        expsum += it;
+    }
+    // cout << "expsum:" << expsum << endl;
+    // cout << "last"<<v[n - 1] << endl;
+    if (expsum != (last * (last + 1) / 2))
+    {
+        cout << "NO" << endl;
+        return;
+    }
+    else
+    {
+        cout << "YES" << endl;
+    }
+    int sum = 0;
+    auto it1 = mp.begin();
+    cout << it1->first << endl;
+    while (it1 != mp.end())
+    {
+        auto it2 = it1;
+        it2++;
+        if (it1->second < it2->second)
+        {
+            cout << "NO" << endl;
+            return;
+        }
+        if (it2 != mp.end())
+        {
+            sum += it1->first * (it2->second - it1->first);
+        }
+    }
+    if (n == sum)
+    {
+        cout << "YES" << endl;
+    }
 }
+
 signed main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    int t = 1;
-    // int t;
-    // cin >> t;
+    // int t = 1;
+    int t;
+    cin >> t;
     while (t--)
     {
         solve();

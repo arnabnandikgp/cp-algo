@@ -16,8 +16,10 @@ int main()
         cin >> arr[i];
     }
     int ans = 0;
-    int head = -1, tail = 0; // the pointer
+    int head = -1, tail = 0; // the pointers
     int count0 = 0;
+
+    // [tail............head]
 
     while (tail < n) // to move the tail forward each time 
     {
@@ -43,4 +45,5 @@ int main()
             tail++;
         }
     }
+    cout<<ans<<endl;
 }

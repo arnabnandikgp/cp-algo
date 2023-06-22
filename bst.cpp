@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+#include <iostream>
+#define ll long long
+using namespace std;
+// #define int long long
+#define mod 1000000007
+#define fr(n) for (int i = 0; i < n; i++)
+#define endl "\n"
+#define mp make_pair
+
+bool check(int k)
+{
+    //do operations of what u need.
+}
+void solve()
+{
+     int n;
+    cin>>n;
+    vector<int> arr(n);
+    fr(n)
+    {
+        cin>>arr[i];
+    }
+    
+    int lo=0;
+    int hi=n-1;
+    
+
+    int ans=0; //set to some default value of our liking
+
+    while(lo<=hi)
+    {
+        int mid=(lo+hi)/2;
+        if(arr[mid]==0)  //if(check(arr[mid]==0))   etc...
+        {
+            lo=mid+1;   
+        }
+        else{
+            ans=mid;
+            hi=mid-1;
+        }
+    }
+    cout<<ans<<endl;
+}
+
+int main()
+{
+   
+}

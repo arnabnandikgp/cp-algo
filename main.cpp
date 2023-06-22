@@ -89,68 +89,86 @@ void ppq(priority_queue<T> g)
   }
   cout << "\n";
 }
-int n;
-int items[101];
-int dp[101][1001000];
-int t;
 
-bool rec(int level, int sum) // will give 0 or 1 on the basis of whether a subarray can be formedd in [level...n-1]
+vector<int> arr;
+bool check(int i)
 {
-
-  // pruning case
-  if (sum > t)
-  {
-    return 0;
-  }
-
-  // base case
-  if (level == n)
-  {
-    if (sum == t)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
-  }
-
-  // cache check
-  if (dp[level][sum]=!-1)
-  {
-    return dp[level][sum];
-  }
-
-  // compute/transition
-  // take
-  if (sum == t)
-  {
+  if (arr[i] > arr[i - 1])
     return 1;
-  }
   else
+    return 0;
+}
+vector<int> final;
+int bins(int l, int r, int n)
+{
+  int lo = l, hi = r;
+  int ans = -1;
+  // int ans = 0;
+  while (lo <= hi)
   {
-    if (sum + items[level] <= t)
+    int mid = (lo + hi) / 2;
+    if (arr[mid] == n) // if(check(arr[mid]==0))   etc...
     {
-      return dp[level + 1][sum + items[level]];
+      final.push_back(mid + 1);
+      break;
     }
-    // not take
+    else if (arr[mid] > n)
+    {
+
+      hi = mid - 1;
+    }
     else
     {
-      return dp[level + 1, sum];
+      lo = mid + 1;
     }
   }
+  return ans;
 }
 void solve()
 {
-  cin >> n;
+  int n, q;
+  cin >> n >> q;
+  arr.resize(n);
   for (int i = 0; i < n; i++)
   {
-    cin >> items[i];
+    cin >> arr[i];
   }
-  cin >> t;
-  memset(dp,-1,sizeof(dp));
-  cout << rec(0, 0) << endl;
+
+  int lo = 1, hi = n - 1;
+  int ans = 0;
+  while (lo <= hi)
+  {
+
+    int mid = (lo + hi) / 2;
+    if (check(mid))
+    {
+      ans = mid;
+      lo = mid + 1;
+    }
+    else
+    {
+      hi = mid - 1;
+    }
+  }
+  cout << ans << endl;
+  while (q--)
+  {
+
+    int k;
+    cin >> k;
+    vector<int> final;
+    // cout << "k:" << k << " ";
+    for (auto v : final)
+    {
+      cout << v << " ";
+    }
+    cout << endl;
+  }
+
+  // cout << ans << endl;
+  // vector<int> st(arr.begin()+1,arr.begin()+ans+1);
+  // vector<int> rev(arr.begin()+ans+1,arr.end());
+  // reverse(rev);
 }
 signed main()
 {
@@ -160,6 +178,7 @@ signed main()
   // int t = 1;
   ll t;
   cin >> t;
+  // cout<<t;
   while (t--)
   {
     solve();
