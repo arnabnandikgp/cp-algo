@@ -1,1 +1,2 @@
-  // arr.resize(n + 1);
+
+  // cin >> t;

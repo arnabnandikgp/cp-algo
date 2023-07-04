@@ -89,79 +89,73 @@ void ppq(priority_queue<T> g)
     }
     cout << "\n";
 }
+#define N 505050
+ll l[N], r[N];
+ll a[N], prefix[N];
+ll q, n, m, t;
+bool check(ll x)
+{
+    for (ll i = 1; i <= n; i++)
+    {
+        prefix[i] = 0;
+    }
+    for (ll i = 1; i <= x; i++)
+    {
+        prefix[a[i]] = 1;
+    }
+    for (ll i = 1; i <= n; i++)
+    {
+        prefix[i] += prefix[i - 1];
+    }
+    for (ll i = 1; i <= m; i++)
+    {
+        if ((prefix[r[i]] - prefix[l[i] - 1]) << 1 > r[i] - l[i] + 1)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 void solve()
 {
-    int n;
-    cin >> n;
-    set<int> st;
-    unordered_map<int, int> mp;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
+    cin >> n >> m;
+    for (ll i = 0; i < m; i++)
     {
-        cin >> v[i];
-        // if (mp.find(v[i]) == mp.end())
-        // {
-        //     mp[v[i]] = 1;
-        // }
-
-        // // Else update the frequency
-        // else
-        // {
-        //     mp[v[i]]++;
-        // }
-        // mp[v[i]]++;
-        st.insert(v[i]);
+        ll a,b;
+        cin>>a>>b;
+        l[i]=a-1;
+        r[i]=b-1;
+        // cin >> l[i] >> r[i];
     }
-    // cout<<"ha";
-    // for (auto r : st)
-    // {
-    //     cout << r << endl;
-    // }
-    sort(v.begin(), v.end());
-    // for (auto k : v)
-    // {
-    //     cout << k << " ";
-    // }
-    // cout << endl;
-
-    int last = v[n - 1];
-    int expsum = 0;
-    for (auto it : st)
+    cin >> q;
+    for (ll i = 0; i < q; i++)
     {
-        expsum += it;
+        ll q;
+        cin>>q;
+        a[i]=q;
+        // cin >> a[i];
     }
-    // cout << "expsum:" << expsum << endl;
-    // cout << "last"<<v[n - 1] << endl;
-    if (expsum != (last * (last + 1) / 2))
+    ll lo = 1;
+    ll hi = q;
+    ll ans = 0;
+    while (lo <= hi)
     {
-        cout << "NO" << endl;
-        return;
-    }
-    else
-    {
-        cout << "YES" << endl;
-    }
-    int sum = 0;
-    auto it1 = mp.begin();
-    cout << it1->first << endl;
-    while (it1 != mp.end())
-    {
-        auto it2 = it1;
-        it2++;
-        if (it1->second < it2->second)
+        ll mid = (hi + lo) >> 1;
+        if (check(mid))
         {
-            cout << "NO" << endl;
-            return;
+            ans = mid;
+            hi = mid - 1;
         }
-        if (it2 != mp.end())
+        else
         {
-            sum += it1->first * (it2->second - it1->first);
+            lo = mid + 1;
         }
     }
-    if (n == sum)
+    if (!ans)
     {
-        cout << "YES" << endl;
+        ans = -1;
     }
+    cout << ans << endl;
 }
 
 signed main()
@@ -169,9 +163,9 @@ signed main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    // int t = 1;
-    int t;
-    cin >> t;
+    int t = 1;
+    // int t;
+    // cin >> t;
     while (t--)
     {
         solve();

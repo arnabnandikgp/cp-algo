@@ -10,40 +10,39 @@ using namespace std;
 
 bool check(int k)
 {
-    //do operations of what u need.
+    // do operations of what u need.
 }
 void solve()
 {
-     int n;
-    cin>>n;
+    int n;
+    cin >> n;
     vector<int> arr(n);
     fr(n)
     {
-        cin>>arr[i];
+        cin >> arr[i];
     }
-    
-    int lo=0;
-    int hi=n-1;
-    
 
-    int ans=0; //set to some default value of our liking
+    int lo = 0;
+    int hi = n - 1;
 
-    while(lo<=hi)
+    int ans = 0; // set to some default value of our liking
+
+    while (lo <= hi)
     {
-        int mid=(lo+hi)/2;
-        if(arr[mid]==0)  //if(check(arr[mid]==0))   etc...
+        int mid = (lo + hi) / 2;
+        if (arr[mid] == 0) // if(check(arr[mid]==0))   etc...
         {
-            lo=mid+1;   
+            ans = mid;
+            hi = mid - 1;
         }
-        else{
-            ans=mid;
-            hi=mid-1;
+        else
+        {
+            lo = mid + 1;
         }
     }
-    cout<<ans<<endl;
+    cout << ans << endl;
 }
 
 int main()
 {
-   
 }

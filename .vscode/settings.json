@@ -17,7 +17,9 @@
         "*.tcc": "cpp",
         "iostream": "cpp",
         "ostream": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "iterator": "cpp",
+        "scoped_allocator": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled",
     "C_Cpp.default.compilerPath": "/usr/bin/gcc"
