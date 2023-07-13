@@ -3,6 +3,10 @@ using namespace std;
 using ll = long long;
 #define endl '\n'
 
+
+//
+// s.#..
+
 int n, m;
 vector<string> arr;
 vector<vector<int>> vis;
@@ -21,9 +25,9 @@ bool valid(int x, int y)
 
 void dfs(int x, int y)
 {
-    vis[x][y] = 1;
+    vis[x][y] = 1;  //marking every cell it visits
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++) // for all neighbours of (x,y) - (nx,ny) 
     {
         int nx = x + dx[i], ny = y + dy[i];
         if (valid(nx, ny) && !vis[nx][ny])
