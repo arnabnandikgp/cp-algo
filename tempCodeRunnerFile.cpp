@@ -1,2 +1,2 @@
 
-  // cin >> t;
+  cnt.clear();

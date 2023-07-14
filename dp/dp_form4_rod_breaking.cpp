@@ -9,7 +9,7 @@ using namespace std;
 
 int n;
 int arr[10001];
-int dp[1000][1000];
+int dp[10001][10001];
 
 int rec(int l, int r) // the min cost of breaking the rod in between l and r
 {
