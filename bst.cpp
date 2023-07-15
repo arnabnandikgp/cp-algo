@@ -1,12 +1,7 @@
-#include <bits/stdc++.h>
-#include <iostream>
+#include "bits/stdc++.h"
 #define ll long long
 using namespace std;
-// #define int long long
-#define mod 1000000007
-#define fr(n) for (int i = 0; i < n; i++)
 #define endl "\n"
-#define mp make_pair
 
 bool check(int k)
 {
@@ -17,11 +12,10 @@ void solve()
     int n;
     cin >> n;
     vector<int> arr(n);
-    fr(n)
+    for(int i=0;i<n;i++)
     {
         cin >> arr[i];
     }
-
     int lo = 0;
     int hi = n - 1;
 

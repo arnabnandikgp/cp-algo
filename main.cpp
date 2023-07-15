@@ -2,60 +2,79 @@
 using ll = long long;
 using namespace std;
 #define endl "\n"
-ll n;
-ll arr[100010];
-int dp[10000][10000];
-ll flag=0;
 
-int rec(int l, int r) // will return the max number of digits we can get rid off between index l and r
+vector<vector<int>> g;
+vector<int> vis;
+vector<int> col;
+
+ll n, m;
+
+void dfs(int node, int co)
 {
-  // pruning
-
-  // base case
-  if (l == r)
+  vis[node] = 1;
+  col[node] = co;
+  for (auto v : g[node])
   {
-    return 1;
+    if (!vis[v])
+    {
+      dfs(v, co);
+    }
   }
-
-  // caching
-  if (dp[l][r] != -1)
-  {
-    flag=1;
-    return dp[l][r];
-  }
-  // computation and transition
-  // int ans = -1e9;
-  int ans;
-  if (arr[l] == arr[r])
-  {
-    ans = r - l + 1;
-  }
-  else
-  {
-    ans = max(rec(l + 1, r), rec(l, r - 1));
-  }
-  // saving and returning
-  return ans = dp[l][r];
-  return ans;
 }
+
 void solve()
 {
-  cin >> n;
-  for (int i = 0; i < n; i++)
+  cin >> n >> m;
+  g.resize(n + 1);
+  vis.assign(n + 1, 0);
+  col.assign(n + 1, 0);
+  while (m--)
   {
-    cin >> arr[i];
+    int a, b;
+    cin >> a >> b;
+    g[a].push_back(b);
+    g[b].push_back(a);
   }
-  memset(dp,-1,sizeof(dp));
-  cout<<rec(0,n-1)<<endl;
-  cout<<flag<<endl;
+  int color = 1;
+  for (int i = 1; i <= n; i++)
+  {
+    if (!vis[i])
+    {
+      dfs(i, color);
+      color++;
+    }
+  }
+  map<int, int> grps;
+  for (int i = 1; i <= n; i++)
+  {
+    grps[col[i]]++;
+  }
+  ll res = 1;
+  for (auto v : grps)
+  {
+    res *= v.second;
+    // cout<<v.second<<" ";
+  }
+  if (grps.size() == 1)
+  {
+    cout << 0 << endl;
+  }
+  // cout<<endl;
+  else
+  {
+    cout << res << endl;
+  }
+  // g.clear();
+  // col.clear();
+  // vis.clear();
 }
 signed main()
 {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
   cout.tie(0);
-  ll t;
-  cin >> t;
+  ll t = 1;
+  // cin >> t;
   while (t--)
   {
     solve();
