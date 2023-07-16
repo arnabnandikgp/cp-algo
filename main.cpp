@@ -4,77 +4,63 @@ using namespace std;
 #define endl "\n"
 
 vector<vector<int>> g;
-vector<int> vis;
 vector<int> col;
-
-ll n, m;
-
-void dfs(int node, int co)
+int n, m;
+bool is_cycle = 0;
+void dfs(int node)
 {
-  vis[node] = 1;
-  col[node] = co;
+  col[node] = 2;
   for (auto v : g[node])
   {
-    if (!vis[v])
+    if (col[v] == 1)
     {
-      dfs(v, co);
+      dfs(v);
+    }
+    else if (col[v] == 2)
+    {
+      is_cycle = 1;
+      return;
     }
   }
+  col[node] = 3;
 }
 
 void solve()
 {
   cin >> n >> m;
   g.resize(n + 1);
-  vis.assign(n + 1, 0);
-  col.assign(n + 1, 0);
+  col.assign(n + 1, 1);
   while (m--)
   {
     int a, b;
     cin >> a >> b;
     g[a].push_back(b);
-    g[b].push_back(a);
   }
-  int color = 1;
   for (int i = 1; i <= n; i++)
   {
-    if (!vis[i])
+    if (col[i] == 1)
     {
-      dfs(i, color);
-      color++;
+      dfs(i);
     }
   }
-  map<int, int> grps;
-  for (int i = 1; i <= n; i++)
+  if (is_cycle)
   {
-    grps[col[i]]++;
+    cout << "YES" << endl;
   }
-  ll res = 1;
-  for (auto v : grps)
-  {
-    res *= v.second;
-    // cout<<v.second<<" ";
-  }
-  if (grps.size() == 1)
-  {
-    cout << 0 << endl;
-  }
-  // cout<<endl;
   else
   {
-    cout << res << endl;
+    cout << "NO" << endl;
   }
   // g.clear();
   // col.clear();
-  // vis.clear();
 }
 signed main()
 {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
   cout.tie(0);
-  ll t = 1;
-  // cin >> t;
+  int t;
+  cin >> t;
   while (t--)
   {
     solve();
