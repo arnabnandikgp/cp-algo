@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 #define ll long long
 
@@ -23,23 +23,27 @@ void prefix(string s)
   }
 }
 
-int abc =1;
 void solve()
 {
-  cout<<"Test case #"<<abc++<<endl;
-  int n;
-  cin >> n;
-  string s;
-  cin >> s;
-  prefix(s);
-  for (int i = 1; i < n; i++)
+
+  string s, t;
+  cin >> t >> s;
+  string process = t + "$" + s;
+  prefix(process);
+  int n = s.length();
+  int len = t.length();
+  // cout<<"len"<<len<<endl;
+  for (int i = 0; i < n + len + 1; i++)
   {
-    if ((i + 1) % (i + 1 - kmp[i]) == 0 && (i + 1) / (i + 1 - kmp[i]) > 1)
+    // cout << kmp[i];
+    if (kmp[i] == len)
     {
-      cout << i + 1 << " " << (i + 1) / (i + 1 - kmp[i]) << "\n";
+      cout << "found it " ;
     }
+    // cout << endl;
   }
-  cout << "\n";
+
+  // return 0;
 }
 signed main()
 {

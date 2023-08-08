@@ -13,7 +13,7 @@ using ii = pair<int, int>;
 vector<string> arr; // input space
 int n, m;
 vector<ii> pols[4]; // U R D L
-char dirchar[]={'U','R','d','L'};
+char dirchar[]={'U','R','D','L'};
 int dx[] = {0, 1, 0, -1};
 int dy[] = {1, 0, -1, 0};
 vector<vector<int>> dist;

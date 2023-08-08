@@ -21,16 +21,21 @@ int dx[] = {1, 0, -1, 0};
 int dy[] = {0, -1, 0, 1};
 ll n, m;
 vector<string> arr;
-ii dist[10000][10000];
+// ii dist[10000][10000];
+vector<vector<ii>> dist(n, vector<ii>(m, make_pair(1e9, 0)));
 ii par[10000][10000];
 bool valid(ii cell)
 {
     int x = cell.F;
     int y = cell.S;
     if (x < 0 || x >= n || y < 0 || y >= m || arr[x][y] == '#')
+    {
         return 0;
+    }
     else
+    {
         return 1;
+    }
 }
 
 void bfs(ii st) // passing the starting point for the bfs
@@ -43,6 +48,7 @@ void bfs(ii st) // passing the starting point for the bfs
         }
     }
     dist[st.F][st.S] = make_pair(0, 1);
+
     queue<ii> q;
     q.push(st);
     while (!q.empty())

@@ -118,44 +118,20 @@ bool check(ll x)
 }
 void solve()
 {
-    cin >> n >> m;
-    for (ll i = 0; i < m; i++)
-    {
-        ll a,b;
-        cin>>a>>b;
-        l[i]=a-1;
-        r[i]=b-1;
-        // cin >> l[i] >> r[i];
-    }
-    cin >> q;
-    for (ll i = 0; i < q; i++)
-    {
-        ll q;
-        cin>>q;
-        a[i]=q;
-        // cin >> a[i];
-    }
-    ll lo = 1;
-    ll hi = q;
-    ll ans = 0;
-    while (lo <= hi)
-    {
-        ll mid = (hi + lo) >> 1;
-        if (check(mid))
-        {
-            ans = mid;
-            hi = mid - 1;
-        }
-        else
-        {
-            lo = mid + 1;
-        }
-    }
-    if (!ans)
-    {
-        ans = -1;
-    }
-    cout << ans << endl;
+    // int x=5;
+    // cout<<x<<endl;
+    // cout<<&x<<endl; // returns the memory location of x
+    // int *ptr = NULL;
+    // if (ptr == NULL)
+    // {
+    //     cout << "oh yeah";
+    // }
+    // cout << ptr << endl;
+    int x=5;
+    int *ptr=&x;
+    cout<<x<<*ptr<<endl;
+
+
 }
 
 signed main()

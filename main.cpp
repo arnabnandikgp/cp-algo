@@ -1,68 +1,31 @@
 #include "bits/stdc++.h"
-using ll = long long;
 using namespace std;
-#define endl "\n"
 
-vector<vector<int>> g;
-vector<int> col;
-int n, m;
-bool is_cycle = 0;
-void dfs(int node)
+int main()
 {
-  col[node] = 2;
-  for (auto v : g[node])
+  vector<int> v(3);
+  for (int i = 0; i < 3; i++)
   {
-    if (col[v] == 1)
-    {
-      dfs(v);
-    }
-    else if (col[v] == 2)
-    {
-      is_cycle = 1;
-      return;
-    }
+    cin >> v[i];
   }
-  col[node] = 3;
-}
-
-void solve()
-{
-  cin >> n >> m;
-  g.resize(n + 1);
-  col.assign(n + 1, 1);
-  while (m--)
+  sort(v.begin(), v.end());
+  long long ans = v[0];
+  v[1] -= v[0];
+  v[2] -= v[0];
+  while ((v[1] > 0 && v[2] > 0) && (v[1] + v[2] >= 3))
   {
-    int a, b;
-    cin >> a >> b;
-    g[a].push_back(b);
-  }
-  for (int i = 1; i <= n; i++)
-  {
-    if (col[i] == 1)
+    if (v[1] > v[2])
+    {         
+      v[1] -= 2;
+      v[2]--;
+      ans++;
+    }
+    else
     {
-      dfs(i);
+      v[2] -= 2;
+      v[1]--;
+      ans++;+
     }
   }
-  if (is_cycle)
-  {
-    cout << "YES" << endl;
-  }
-  else
-  {
-    cout << "NO" << endl;
-  }
-  // g.clear();
-  // col.clear();
-}
-signed main()
-{
-  ios_base::sync_with_stdio(0);
-  cin.tie(0);
-  cout.tie(0);
-  int t;
-  cin >> t;
-  while (t--)
-  {
-    solve();
-  }
+  cout << ans << endl;
 }
