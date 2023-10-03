@@ -37,7 +37,6 @@ bool valid(ii cell)
         return 1;
     }
 }
-
 void bfs(ii st) // passing the starting point for the bfs
 {
     for (int i = 0; i < n; i++)
