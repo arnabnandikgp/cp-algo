@@ -23,6 +23,7 @@ ll n, m;
 vector<string> arr;
 // ii dist[10000][10000];
 vector<vector<ii>> dist(n, vector<ii>(m, make_pair(1e9, 0)));
+//not explicitly defining a graph here
 ii par[10000][10000];
 bool valid(ii cell)
 {

@@ -42,7 +42,7 @@ bool valid(int x, int y)
     }
 }
 
-void process(vector<ii> pols[]) // will populate the array ith "B" when in vision of a pols
+void process(vector<ii> pols[]) // will populate the array with "B" when in vision of a pols
 {
     for (int dir = 0; dir < 4; dir++)
     {
@@ -90,7 +90,7 @@ void dfs(ii st)
 void solve()
 {
     cin >> n >> m;
-    arr.resize(n);
+    arr.resize(n+1);
     for (int i = 0; i < n; i++)
     {
         cin >> arr[i];

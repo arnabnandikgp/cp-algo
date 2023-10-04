@@ -9,7 +9,7 @@ using ii = pair<int, int>;
 //jai shree ram!
 
 // a person is there in a grid (n*m) and is sorounded by monsters who are at random places of the grid
-// and th>e person has to get out of the grid in a manner such that after he picks up the best spot for escape he dosent change his decision of escape route
+// and the person has to get out of the grid in a manner such that after he picks up the best spot for escape he dosent change his decision of escape route
 queue<ii> monstq;
 queue<ii> perq;
 vector<string> arr;
@@ -34,7 +34,7 @@ bool valid(int x, int y)
 void solve()
 {
     cin >> n >> m;
-    arr.resize(n);
+    arr.resize(n+1);
     memset(distper,1e9,sizeof(distper));
     for (int i = 0; i < n; i++)
     {

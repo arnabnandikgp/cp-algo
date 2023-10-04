@@ -104,5 +104,4 @@ int main()
     {
         cout<<v.F<<" "<<v.S<<endl;
     }
-    
 }
