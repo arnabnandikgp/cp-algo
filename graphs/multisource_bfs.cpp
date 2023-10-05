@@ -6,7 +6,7 @@ using ii = pair<int, int>;
 #define mp make_pair
 #define F first
 #define S second
-//jai shree ram!
+// jai shree ram!
 
 // a person is there in a grid (n*m) and is sorounded by monsters who are at random places of the grid
 // and the person has to get out of the grid in a manner such that after he picks up the best spot for escape he dosent change his decision of escape route
@@ -34,8 +34,8 @@ bool valid(int x, int y)
 void solve()
 {
     cin >> n >> m;
-    arr.resize(n+1);
-    memset(distper,1e9,sizeof(distper));
+    arr.resize(n);
+    memset(distper, 1e9, sizeof(distper));
     for (int i = 0; i < n; i++)
     {
         cin >> arr[i];
@@ -85,31 +85,44 @@ void solve()
             }
         }
     }
-
+    int finx = -1;
+    int finy = -1;
+    int findist=1e9;
     for (int i = 0; i < m; i++)
     {
-        if (valid(0,i) && distper[0][i]!=1e9 &&(distper[0][i]>distmons[0][i] || distmons[0][i]==1e9) )
+        if (valid(0, i) && distper[0][i] != 1e9 && (distper[0][i] > distmons[0][i] || distmons[0][i] == 1e9))
         {
-
+            finx = 0;
+            finy = i;
+            findist=min(findist,distper[0][i]);
         }
-        if ()
+        if (valid(n-1, i) && distper[0][i] != 1e9 && (distper[n-1][i] > distmons[n-1][i] || distmons[n-1][i] == 1e9))
         {
+            finx = n-1;
+            finy = i;
+            findist=min(findist,distper[n-1][i]);
         }
     }
 
     for (int i = 0; i < m; i++)
     {
-        if ()
+        if (valid(i, 0) && distper[i][0] != 1e9 && (distper[i][0] > distmons[i][0] || distmons[i][0] == 1e9))
         {
+            finx = i;
+            finy = 0;
+            findist=min(findist,distper[i][0]);
         }
-        if ()
+        if (valid( i,n-1) && distper[i][n-1] != 1e9 && (distper[i][n-1] > distmons[i][n-1] || distmons[i][n-1] == 1e9))
         {
+            finx = i;
+            finy = n-1;
+            findist=min(findist,distper[i][n-1]);
         }
     }
 }
 signed main()
 {
-    int t;
+    int t=1;
     cin >> t;
     while (t--)
     {
