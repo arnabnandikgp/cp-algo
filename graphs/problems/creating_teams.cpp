@@ -11,8 +11,8 @@ vector<int> col; // will store the color
 vector<int> vis;
 void bfs(int st)
 {
-    queue<int> q;
     vis[st] = 1;
+    queue<int> q;
     q.push(st);
     while (!q.empty())
     {
@@ -22,7 +22,9 @@ void bfs(int st)
         {
             if (!vis[v])
             {
+                vis[v]=1;
                 col[v] = !col[cur];
+                q.push(v);
             }
         }
     }
