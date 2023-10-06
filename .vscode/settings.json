@@ -19,7 +19,8 @@
         "ostream": "cpp",
         "numbers": "cpp",
         "iterator": "cpp",
-        "scoped_allocator": "cpp"
+        "scoped_allocator": "cpp",
+        "random": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled",
     "C_Cpp.default.compilerPath": "/usr/bin/gcc"

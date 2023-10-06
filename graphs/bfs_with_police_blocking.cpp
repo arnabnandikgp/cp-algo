@@ -65,7 +65,7 @@ void process(vector<ii> pols[]) // will populate the array with "B" when in visi
         }
     }
 }
-void dfs(ii st)
+void bfs(ii st)
 {
     dist.assign(n, vector<int>(m, 1e9));
     dist[st.F][st.S] = 0;
@@ -127,7 +127,7 @@ void solve()
         }
     }
     process(pols);
-    dfs(st);
+    bfs(st);
     if (dist[en.F][en.S] == 1e9)
     {
         cout << -1 << endl;

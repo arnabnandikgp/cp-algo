@@ -29,17 +29,17 @@ void dfs(int node, int par)
 
             /* code to print jus one cycle*/
 
-            // if (is_cycle == 0)
-            // {
-            //     int temp = node;
-            //     while (temp != v)
-            //     {
-            //         any_cycle.push_back(temp);
-            //         temp = parent[temp];
-            //     }
-            //     any_cycle.push_back(temp);
-            // }
-            // reverse(any_cycle.begin(),any_cycle.end());
+            if (is_cycle == 0)
+            {
+                int temp = node;
+                while (temp != v)
+                {
+                    any_cycle.push_back(temp);
+                    temp = parent[temp];
+                }
+                any_cycle.push_back(temp);
+            }
+            reverse(any_cycle.begin(),any_cycle.end());
 
             is_cycle = 1;
         }
@@ -50,7 +50,6 @@ void dfs(int node, int par)
     }
     color[node] = 3;
 }
-
 signed main()
 {
     cin >> n >> m;

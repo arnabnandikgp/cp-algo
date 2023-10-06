@@ -36,6 +36,7 @@ void dfs(int x, int y)
         }
     }
 }
+
 void solve()
 {
     cin >> n >> m;

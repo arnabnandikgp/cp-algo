@@ -12,7 +12,7 @@ void dfs(int nn, int comp)
     vis[nn] = comp;
     for (auto v : g[nn])
     {
-        if (!vis[nn])
+        if (!vis[v])
         {
             dfs(v, comp);
         }
@@ -38,7 +38,7 @@ void solve()
     int comp = 0;
     for (int i = 1; i <= n; i++)
     {
-        if (!vis[n])
+        if (!vis[i])
         {
             comp++;
             dfs(i, comp);
