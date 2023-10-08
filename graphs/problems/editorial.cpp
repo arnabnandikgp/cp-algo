@@ -1,81 +1,66 @@
+
 #include <bits/stdc++.h>
+#define int long long
 using namespace std;
 
-#define ll int64_t
-#define endl '\n'
-vector<int> d;
-int g;
+vector<vector<pair<int, int>>> g;
+vector<bool> vis;
+vector<int> dis;
 int n, m;
-vector<vector<int>> adj;
 
-void bfs(int s)
-{
-    d.assign(n + 1, 1e9);
-    queue<int> q;
-    q.push(s);
+class comp{
+    public:
+    bool operator()(pair<int, int> p1, pair<int, int> p2){
+        return p1.second > p2.second;
+    }
+};
 
-    d[s] = 0;
 
-    while (!q.empty())
-    {
-        int v = q.front();
-        q.pop();
+void dijkstra(){
+    dis[1] = 0;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, comp> pq;
+    pq.push({1, 0});
 
-        for (auto x : adj[v])
-        {
-            if (d[x] == 1e9)
-            {
-                q.push(x);
-                d[x] = d[v] + 1;
-            }
-            else if (d[v] <= d[x])
-            {
-                g = min(g, d[v] + d[x] + 1);
-                if (d[v] == d[x])
-                { // optimisation.
-                    return;
-                }
+    while(!pq.empty()){
+        auto val = pq.top();
+        int node = val.first;
+        int curWeight = val.second;
+
+        pq.pop();
+        if(vis[node]) continue;
+        vis[node] = true;
+
+        for(auto neighNode : g[node]){
+            int neigh = neighNode.first;
+            int weight = neighNode.second;
+            if(dis[neigh] > dis[node] + weight){
+                dis[neigh] = dis[node] + weight;
+                pq.push(make_pair(neigh, dis[neigh]));
             }
         }
     }
 }
 
-void solve()
-{
+void solve(){
     cin >> n >> m;
-    adj.resize(n + 1);
-    for (int i = 0; i < m; i++)
-    {
-        int u, v;
-        cin >> u >> v;
-        adj[u].push_back(v);
-        adj[v].push_back(u);
+    g.assign(n+1, vector<pair<int, int>>());
+    vis.assign(n+1, false);
+    dis.assign(n+1, 1e18);
+    for(int i=0; i<m; i++){
+        int a, b, c; cin >> a >> b >> c;
+        g[a].push_back({b, c});
     }
-    g = 1e9;
-    for (int i = 1; i <= n; i++)
-    {
-        bfs(i);
-    }
-    cout << ((g == 1e9) ? -1 : g) << endl;
-}
-int main()
-{
-    ios_base ::sync_with_stdio(0);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+    dijkstra();
 
-#ifdef Mastermind_
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
-    int t = 1;
-    // int i = 1;
-    // cin >> t;
-    while (t--)
-    {
-        // cout << "Case #" << i << ": ";
-        solve();
-        // i++;
-    }
+    for(int i=1; i<=n; i++) cout << dis[i] << " ";
+}
+
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+
+    //int _t; cin >> _t; while(_t--)
+    solve();
+
     return 0;
 }

@@ -8,32 +8,38 @@ using ii = pair<ll, ll>;
 
 vector<vector<ii>> g;
 vector<ll> dist;
-int n, m;
-
-bool comp()
+vector<ll> vis;
+ll n, m;
+class comparator
 {
-
-}
+public:
+    bool operator()(ii p1, ii p2)
+    {
+        return p1.S > p2.S;
+    }
+};
 
 void bfs(ll st)
 {
     dist[st] = 0;
-    priority_queue<ii> q;
-    q.push(st);
-    while (!q.empty())
+    priority_queue<ii, vector<ii>, comparator> pq;
+    pq.push(make_pair(st, 0));
+    while (!pq.empty())
     {
-        int cur = q.front();
-        q.pop();
-        // if(dist[cur]!=1e9)
-        // {
-        //     continue;
-        // }
-        for (auto v : g[cur])
+        auto cur = pq.top();
+        pq.pop();
+        if (vis[cur.F]) // this step is ensure due to the priority queue arrangement
         {
-            if (dist[v.F] > dist[cur] + v.S)
+            continue;
+        }
+        vis[cur.F] = 1;
+
+        for (auto v : g[cur.F])
+        {
+            if (dist[v.F] > dist[cur.F] + v.S)
             {
-                dist[v.F] = dist[cur] + v.S;
-                q.push(v.F);
+                dist[v.F] = dist[cur.F] + v.S;
+                pq.push(make_pair(v.F, dist[v.F]));
             }
         }
     }
@@ -42,8 +48,9 @@ void bfs(ll st)
 void solve()
 {
     cin >> n >> m;
-    g.resize(n + 1);
-    dist.assign(n + 1, 1e9);
+    g.assign(n + 1, vector<pair<ll, ll>>());
+    dist.assign(n + 1, 1e18);
+    vis.resize(n + 1, 0);
     for (ll i = 0; i < m; i++)
     {
         ll a, b, c;
