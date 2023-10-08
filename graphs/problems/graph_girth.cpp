@@ -6,7 +6,7 @@ using ll = long long;
 vector<vector<int>> g;
 vector<int> dist;
 int n, m;
-int girth = 1e9;
+int girth;
 void bfs(int st)
 {
     dist.assign(n, 1e9);
@@ -17,29 +17,29 @@ void bfs(int st)
     {
         int cur = q.front();
         q.pop();
+
         for (auto v : g[cur])
         {
             if (dist[v] == 1e9)
             {
-                dist[v] = dist[cur] + 1;
                 q.push(v);
+                dist[v] = dist[cur] + 1;
             }
-            else if (dist[cur] <= dist[v])
-            { 
+            else if (dist[cur] <= dist[v]) // finding for the path directly
+            {
                 girth = min(girth, dist[v] + dist[cur] + 1);
                 if (dist[cur] == dist[v])
-                { // optimisation.
+                {
                     return;
                 }
             }
         }
     }
 }
-signed main()
+void solve()
 {
     cin >> n >> m;
     g.resize(n + 1);
-    dist.resize(n + 1);
     for (int i = 0; i < m; i++)
     {
         int a, b;
@@ -47,9 +47,18 @@ signed main()
         g[a].push_back(b);
         g[b].push_back(a);
     }
+    girth = 1e9;
     for (int i = 1; i <= n; i++)
     {
         bfs(i);
     }
-    cout << "yo" << girth << endl;
+    cout << ((girth == 1e9) ? -1 : girth) << endl;
+}
+signed main()
+{
+    int t = 1;
+    while (t--)
+    {
+        solve();
+    }
 }

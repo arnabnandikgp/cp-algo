@@ -19,7 +19,7 @@ bool valid(ii num)
 {
     int x = num.F;
     int y = num.S;
-    if (x >= n || x < 0 || y >= n || y < 0 || g[x][y] == '.')
+    if (x >= n || x < 0 || y >= 10 || y < 0 || g[x][y] == 0)
     {
         return 0;
     }
@@ -34,8 +34,13 @@ void dfs(ii st, int col)
         mp[col]++;
         for (int i = 0; i < 4; i++)
         {
-            ii nn = make_pair(st.F + dx[i], st.S + dy[i]);
-            dfs(nn, col);
+            int x = st.F + dx[i];
+            int y = st.S + dy[i];
+            ii nn = make_pair(x, y);
+            if (valid(nn) && (g[x][y] == g[st.F][st.S]))
+            {
+                dfs(nn, col);
+            }
         }
     }
 }
@@ -44,7 +49,7 @@ void solve()
 {
     int k;
     cin >> n >> k;
-    // comp.assign(n+1, vector<int>(10, 0));
+    comp.assign(n, vector<int>(10, 0));
     g.assign(n, (vector<int>(10, 0)));
     for (int i = 0; i < n; i++)
     {
@@ -52,20 +57,22 @@ void solve()
         cin >> a;
         for (int j = 9; j >= 0; j--)
         {
-            g[i][j] = a%10;
-            a=a/10;
+            g[i][j] = a % 10;
+            a = a / 10;
         }
     }
-    int ulti_flag = 0;
-    // cout<<"yes";
-    // repeat unit
-    // while (!ulti_flag)
-    // {
+    int col;
+    int ptanhi = 1;
+    int flag = 0;
+
+    while (ptanhi--)
+    {
         comp.assign(n, vector<int>(10, 0));
-        int col = 0;
+        // to_remove.clear();
+        col = 0;
         for (int i = 0; i < n; i++)
         {
-            for (int j = 0; j < n; j++)
+            for (int j = 0; j < 10; j++)
             {
                 ii cube = make_pair(i, j);
                 if (valid(cube) && (!comp[i][j]))
@@ -75,9 +82,7 @@ void solve()
                 }
             }
         }
-        // what to remove
         vector<int> to_remove;
-        int flag = 0;
         for (auto v : mp)
         {
             if (v.second >= k)
@@ -86,12 +91,6 @@ void solve()
                 to_remove.push_back(v.first);
             }
         }
-        if (!flag)
-        {
-            ulti_flag = 1;
-            // break;
-        }
-        // deletion
         if (flag)
         {
             for (int i = 0; i < n; i++)
@@ -112,17 +111,25 @@ void solve()
                 }
             }
         }
-    // }
+        else
+        {
+            break;
+        }
+    }
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < 10; j++)
         {
-            // cout << g[i][j] << " ";
-            cout<<comp[i][j]<<" ";
+            cout << g[i][j] << " ";
+            // cout<<endl;
+            // cout << comp[i][j] << " ";
         }
         cout << endl;
     }
+    // for(auto)
+    cout << "col" << col << endl;
 }
+
 signed main()
 {
     ios_base::sync_with_stdio(0);

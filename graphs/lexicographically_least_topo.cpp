@@ -47,17 +47,17 @@
             indeg[b]++;
         }
         kahn();
-        if (topo.size() != n) // helps in finding whether there is a cycle or not as for
-        // node which is a part of a cycle will never have indeg = 0
-        {
-            // cout << "there is a cycle";
-            cout<<-1<<endl;
-        }
-        else
-        {
+        // if (topo.size() != n) // helps in finding whether there is a cycle or not as for
+        // // node which is a part of a cycle will never have indeg = 0
+        // {
+        //     // cout << "there is a cycle";
+        //     cout<<-1<<endl;
+        // }
+        // else
+        // {
             for (auto v : topo)
             {
                 cout << v << " ";
             }
-        }
+        // }
     }

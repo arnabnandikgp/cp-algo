@@ -1,52 +1,81 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
-#define ld long double
-const int N = 100010;
-int inf = 1e9;
-int mod = 1e9 + 7;
-vector<vector<int>> g;
-vector<int> vis;
-void dfs(int node, int num_comp)
+
+#define ll int64_t
+#define endl '\n'
+vector<int> d;
+int g;
+int n, m;
+vector<vector<int>> adj;
+
+void bfs(int s)
 {
-    vis[node] = 1;
-    for (auto x : g[node])
+    d.assign(n + 1, 1e9);
+    queue<int> q;
+    q.push(s);
+
+    d[s] = 0;
+
+    while (!q.empty())
     {
-        if (vis[x] == 0)
+        int v = q.front();
+        q.pop();
+
+        for (auto x : adj[v])
         {
-            dfs(x, num_comp);
+            if (d[x] == 1e9)
+            {
+                q.push(x);
+                d[x] = d[v] + 1;
+            }
+            else if (d[v] <= d[x])
+            {
+                g = min(g, d[v] + d[x] + 1);
+                if (d[v] == d[x])
+                { // optimisation.
+                    return;
+                }
+            }
         }
     }
 }
+
 void solve()
 {
-    int n, m;
     cin >> n >> m;
-    g.resize(n + 1);
-    vis.assign(n + 1, 0);
+    adj.resize(n + 1);
     for (int i = 0; i < m; i++)
     {
-        int a, b;
-        cin >> a >> b;
-        g[a].push_back(b);
-        g[b].push_back(a);
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
-    int num_comp = 0;
+    g = 1e9;
     for (int i = 1; i <= n; i++)
     {
-        if (vis[i] == 0)
-        {
-            num_comp++;
-            dfs(i, num_comp);
-        }
+        bfs(i);
     }
-    cout << num_comp - 1 << "\n";
+    cout << ((g == 1e9) ? -1 : g) << endl;
 }
-signed main()
+int main()
 {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    // int _t;cin>>_t;while(_t--)
-    solve();
+    ios_base ::sync_with_stdio(0);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+#ifdef Mastermind_
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t = 1;
+    // int i = 1;
+    // cin >> t;
+    while (t--)
+    {
+        // cout << "Case #" << i << ": ";
+        solve();
+        // i++;
+    }
+    return 0;
 }
