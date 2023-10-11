@@ -27,11 +27,11 @@ int main()
     multiset<int> ms;
     for (int i = 0; i < (int)events.size(); i++)
     {
-        if (events[i].first.first == 0)
+        if (events[i].first.second == 0)
         {
             ms.insert(events[i].second);
         }
-        else if (events[i].first.first == 2)
+        else if (events[i].first.second == 2)
         {
             ms.erase(ms.find((events[i].second)));
         }
