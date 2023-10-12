@@ -1,20 +1,50 @@
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 100010; // total number of nodes in the array, will depend on the constraints in question
-int Tree[4 * N];
 int A[N];
+
+// we are given a n sized array and we will update it regularly as well as make query which will have to print out the minimum number in that range as well as how many times it as ocurred there
+
+node Tree[4 * N];
+
+struct node
+{
+    int mini;
+    int cnt;
+    node(int m = 1e9, int c = 0)
+    {
+        mini = m;
+        cnt = c;
+    }
+};
+
+node merge(node a, node b)
+{
+    if (a.mini == b.mini)
+    {
+        return node(a.mini, a.cnt + b.cnt);
+    }
+    else if (a.mini < b.mini)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
 
 void build(int node, int start, int end)
 {
     if (start == end)
     {
-        Tree[node] = A[start];
+        Tree[node] = node(A[start], 1);
         return;
     }
     int mid = (start + end) / 2;
     build(2 * node, start, mid);
     build(2 * node + 1, mid + 1, end);
-    Tree[node] = Tree[2 * node] + Tree[2 * node + 1];
+    Tree[node] = merge(Tree[2 * node], Tree[2 * node + 1]);
     return;
 }
 

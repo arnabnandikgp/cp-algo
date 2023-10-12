@@ -3,7 +3,6 @@ using namespace std;
 using ll = long long;
 #define endl '\n'
 using ii = pair<ll, ll>;
-#define mp make_pair
 #define F first
 #define S second
 
@@ -22,15 +21,18 @@ int main()
     }
     ll q;
     cin >> q;
-    for(int i=0;i<q;i++)
+    map<ll, ll> mp;
+    for (ll i = 0; i < q; i++)
     {
         ll a, b;
         cin >> a >> b;
-        events.push_back(make_pair(make_pair(a, 1), b));
+        events.push_back(make_pair(make_pair(a, 1), i));
+        mp[a] = b;
     }
+    vector<ll> ans(q);
     sort(events.begin(), events.end());
     multiset<ll> st;
-    for (ll i = 0; i < (ll)events.size(); i++)
+    for (ll i = 0; i + 1 < (ll)events.size(); i++)
     {
         if (events[i].F.S == 0)
         {
@@ -42,16 +44,20 @@ int main()
         }
         else
         {
-            auto it = st.upper_bound(events[i].S);
+            auto it = st.upper_bound(mp[events[i].F.F]);
             if (it != st.begin())
             {
                 it--;
-                cout << *it << endl;
+                ans[events[i].S] = *it;
             }
             else
-                cout << -1 << endl;
+            {
+                ans[events[i].S] = -1;
+            }
         }
-
+    }
+    for (auto v : ans)
+    {
+        cout << v << endl;
     }
 }
-
