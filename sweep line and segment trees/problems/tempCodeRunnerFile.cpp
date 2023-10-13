@@ -1,4 +1,4 @@
-auto v : st)
+* n + 1; i++)
     // {
-    //     cout << v << " ";
+    //     cout << t[i] << endl;
     // }

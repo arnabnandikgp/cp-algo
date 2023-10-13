@@ -1,92 +1,79 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int N = 100010; // total number of nodes in the array, will depend on the constraints in question
-int Tree[4 * N];
-int A[N];
 
-void build(int node, int start, int end)
+int n;
+int arr[100000];
+int t[400040]; // size of tree will be 4 times the size of the array
+
+void build(int index, int l, int r) // building the tree
 {
-    if (start == end)
+    if (l == r)
     {
-        Tree[node] = A[start];
+        t[index] = arr[l];
         return;
     }
-    int mid = (start + end) / 2;
-    build(2 * node, start, mid);
-    build(2 * node + 1, mid + 1, end);
-    Tree[node] = Tree[2 * node] + Tree[2 * node + 1];
-    return;
+    int mid = (l + r) / 2;
+    build(index * 2, l, mid);
+    build(index * 2 + 1, mid + 1, r);
+    t[index] = t[2 * index] + t[(2 * index) + 1];
 }
 
-void update(int node, int start, int end, int i, int x) // update the value of this node if element at ith index is updated to x
+void update(int index, int l, int r, int pos, int x)
 {
-    if (start == end)
+    if (pos > r || pos < l)
     {
-        A[start] = x;   // start=end=i
-        Tree[node] = x; // since it will be a leaf node
+        return;
     }
-
-    int mid = (start + end) / 2;
-    if (i <= mid)
+    if (l == r)
     {
-        update(2 * node, start, mid, i, x);
+        t[index] = x;
+        return;
     }
-    else
-    {
-        update(2 * node + 1, mid + 1, end, i, x);
-    }
-    Tree[node] = Tree[2 * node] + Tree[2 * node + 1];
-    return;
+    int mid = (l + r) / 2;
+    update(2 * index, l, mid, pos, x);
+    update(2 * index + 1, mid + 1, r, pos, x);
+    t[index] = t[2 * index] + t[2 * index + 1];
 }
 
-int query(int node, int start, int end, int l, int r) // will return the sum in range of l->r
+int query(int index, int l, int r, int lq, int rq)
 {
-    // disjoint range condition
-    // l...r start...end / start...end l...r
-    if (start > r || end < l)
+    if (rq < l || lq > r) //(lq,rq) (l,r) || (l,r)  (lq,rq)
     {
         return 0;
     }
-
-    // subrange condition
-    // start...l..r..end
-    if (l <= start && end <= r)
+   else if (l >= lq && rq >= r) //(lq (l,r) rq)
     {
-        return Tree[node];
+        return t[index];
     }
-
-    // partial intersection condition
-    //  l...start..r..end / start...l...end..r
-    int mid = (start + end) / 2;
-    return query(2 * node, start, mid, l, r) + query(2 * node + 1, mid + 1, end, l, r);
+    int mid = (l + r) / 2;
+    return (query(2 * index, l, mid, lq, rq) + query(2 * index + 1, mid + 1, r, lq, rq));
 }
 
-int main()
+void solve()
 {
-    int n; // the exact number of elements mentioned in the question
     cin >> n;
     for (int i = 0; i < n; i++)
     {
-        cin >> A[i];
+        cin >> arr[i];
     }
-
+    build(1, 0, n - 1);
     int q;
     cin >> q;
-    while (q--)
+    for (int i = 0; i < q; i++)
     {
-        int a;
-        cin >> a;
-        if (a == 1)
+        int ch;
+        cin >> ch;
+        if (ch == 1)
         {
-            int l, r;
-            cin >> l >> r;
-            cout << query(1, 0, n - 1, l, r) << endl;
+            int x, v;
+            cin >> x >> v;
+            update(1, 0, n - 1, x, v);
         }
         else
         {
-            int i, x;
-            cin >> i >> x;
-            update(1, 0, n - 1, i, x);
+            int l, r;
+            cin >> l >> r;
+            cout << query(1, 0, n - 1, l, r);
         }
     }
 }
