@@ -1,4 +1,2 @@
-* n + 1; i++)
-    // {
-    //     cout << t[i] << endl;
-    // }
+ - 1, l, r);
+            cout << ans.odd << endl;
