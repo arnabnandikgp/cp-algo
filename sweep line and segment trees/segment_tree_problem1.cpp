@@ -66,7 +66,7 @@ node query(int index, int l, int r, int lq, int rq)
 {
     if (rq < l || lq > r) //(lq,rq) (l,r) || (l,r)  (lq,rq)
     {
-        return 0;
+        return node(0,0);
     }
     else if (l >= lq && rq >= r) //(lq (l,r) rq)
     {

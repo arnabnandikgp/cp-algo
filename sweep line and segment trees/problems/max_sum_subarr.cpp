@@ -1,21 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define endl "\n"
 using ll = long long;
 
 struct node
 {
-    ll even;
-    ll odd;
-    node(ll e = 0, ll o = 0)
+    ll msum;
+    ll lsum;
+    ll rsum;
+    ll totsum;
+    node(ll m = 0, ll l = 0, ll r = 0, ll t = 0)
     {
-        even = e;
-        odd = o;
+        msum = m;
+        lsum = l;
+        rsum = r;
+        totsum = t;
     }
 };
 
 node merge(node a, node b)
 {
-    return node(a.even + b.even, a.odd + b.odd);
+    node ans;
+    ans.msum = max(a.msum, b.msum);
+    ans.msum = max(ans.msum, a.rsum + b.lsum);
+    ans.lsum = max(a.lsum, a.totsum + b.lsum);
+    ans.rsum = max(b.rsum, b.totsum + a.rsum);
+    ans.totsum = a.totsum + b.totsum;
+    return ans;
 }
 
 ll n;
@@ -26,14 +37,7 @@ void build(ll index, ll l, ll r) // building the tree
 {
     if (l == r)
     {
-        if ((arr[l] % 2) == 1)
-        {
-            t[index] = node(0, 1);
-        }
-        else
-        {
-            t[index] = node(1, 0);
-        }
+        t[index] = node(arr[l], arr[l], arr[l], arr[l]);
         return;
     }
     ll mid = (l + r) / 2;
@@ -50,14 +54,7 @@ void update(ll index, ll l, ll r, ll pos, ll x)
     }
     if (l == r)
     {
-        if (x % 2 == 1)
-        {
-            t[index] = node(0, 1);
-        }
-        else
-        {
-            t[index] = node(1, 0);
-        }
+        t[index] = node(x, x, x, x);
         return;
     }
     ll mid = (l + r) / 2;
@@ -70,7 +67,7 @@ node query(ll index, ll l, ll r, ll lq, ll rq)
 {
     if (rq < l || lq > r) //(lq,rq) (l,r) || (l,r)  (lq,rq)
     {
-        return node(0, 0);
+        return node(0, 0, 0, 0);
     }
     else if (l >= lq && rq >= r) //(lq (l,r) rq)
     {
@@ -82,46 +79,29 @@ node query(ll index, ll l, ll r, ll lq, ll rq)
 
 void solve()
 {
-    cin >> n;
+    ll q;
+    cin >> n >> q;
     for (ll i = 0; i < n; i++)
     {
         cin >> arr[i];
     }
     build(1, 0, n - 1);
-
-    ll q;
-    cin >> q;
     for (ll i = 0; i < q; i++)
     {
-        ll ch;
-        cin >> ch;
-        if (ch == 0)
+        ll pos, x;
+        cin >> pos >> x;
+        pos--;
+        update(1, 0, n - 1, pos, x);
+        node ans = t[1];
+        if (ans.msum > 0)
         {
-            ll x, v;
-            cin >> x >> v;
-            x--;
-            update(1, 0, n - 1, x, v);
-        }
-        else if (ch == 1)
-        {
-            ll l, r;
-            cin >> l >> r;
-            l--;
-            r--;
-            node ans = query(1, 0, n - 1, l, r);
-            cout << ans.even << endl;
+            cout << ans.msum << endl;
         }
         else
         {
-            ll l, r;
-            cin >> l >> r;
-            l--;
-            r--;
-            node ans = query(1, 0, n - 1, l, r);
-            cout << ans.odd << endl;
+            cout << 0 << endl;
         }
     }
-
 }
 signed main()
 {

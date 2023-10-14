@@ -41,7 +41,7 @@ int query(int index, int l, int r, int lq, int rq)
     {
         return 0;
     }
-   else if (l >= lq && rq >= r) //(lq (l,r) rq)
+    else if (l >= lq && rq >= r) //(lq (l,r) rq)
     {
         return t[index];
     }
@@ -75,5 +75,17 @@ void solve()
             cin >> l >> r;
             cout << query(1, 0, n - 1, l, r);
         }
+    }
+    for (int i = 1; i < 2*n+10; i++)
+    {
+        cout << t[i] << endl;
+    }
+}
+int main()
+{
+    int t=1;
+    while(t--)
+    {
+        solve();
     }
 }
