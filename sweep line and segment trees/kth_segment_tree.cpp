@@ -9,11 +9,8 @@ void build(int index, int l, int r) // building the tree
 {
     if (l == r)
     {
-        if (l < arr[l] < r)
-        {
-            t[index]++;
-            return;
-        }
+        t[index]=1;
+        return; 
     }
     int mid = (l + r) / 2;
     build(index * 2, l, mid);
