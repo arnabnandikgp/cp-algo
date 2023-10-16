@@ -1,21 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define endl "\n"
-using ii = pair<int, int>;
+using ll = long long;
+using ii = pair<ll, ll>;
+ll arr[200020];
 
 struct node
 {
-    int sum;
-    pair<int, int> lazy;
-    node(int s = 0, int l1 = 0, int l2 = 0)
+    ll sum;
+    ii lazy;
+    node(ll s = 0, ll l1 = 0, ll l2 = 0)
     {
         sum = s;
         lazy.first = l1;
         lazy.second = l2;
     }
 };
-node t[4000040];
-void push(int index, int l, int r)
+
+node t[800080];
+void push(ll index, ll l, ll r)
 {
     if (t[index].lazy.first == 2)
     {
@@ -25,7 +28,7 @@ void push(int index, int l, int r)
             t[2 * index].lazy = t[index].lazy;
             t[2 * index + 1].lazy = t[index].lazy;
         }
-        t[index] = 0;
+        t[index].lazy = make_pair(0, 0);
     }
     else if (t[index].lazy.first == 1)
     {
@@ -35,77 +38,78 @@ void push(int index, int l, int r)
             t[2 * index].lazy = t[index].lazy;
             t[2 * index + 1].lazy = t[index].lazy;
         }
-        t[index] = 0;
+        t[index].lazy = make_pair(0, 0);
     }
 }
 
 node merge(node a, node b)
 {
-    int s = a.sum + b.sum;
+    ll s = a.sum + b.sum;
     return node(s, 0, 0);
 }
-int arr[200020];
 
-void build(int index, int l, int r)
+void build(ll index, ll l, ll r)
 {
     if (l == r)
     {
-        t[index] = arr[l];
+        t[index].sum = arr[l];
+        return;
     }
-    int mid = (l + r) / 2;
+    ll mid = (l + r) / 2;
     build(2 * index, l, mid);
     build(2 * index + 1, mid + 1, r);
-    t[index] = merge(t[index], t[2 * index + 1]);
+    t[index] = merge(t[2 * index], t[2 * index + 1]);
 }
-void update(int index, int l, int r, int lq, int rq, pair<int, int> val)
+
+void update(ll index, ll l, ll r, ll lq, ll rq, pair<ll, ll> val)
 {
     push(index, l, r);
     if (lq > r || l > rq)
     {
         return;
     }
-    else if (lq >= l && r >= rq)
+    else if (l >= lq && rq >= r)
     {
         t[index].lazy = val;
         push(index, l, r);
         return;
     }
-    int mid = (l + r) / 2;
+    ll mid = (l + r) / 2;
     update(2 * index, l, mid, lq, rq, val);
     update(2 * index + 1, mid + 1, r, lq, rq, val);
     t[index] = merge(t[2 * index], t[2 * index + 1]);
 }
 
-node query(int index, int l, int r, int lq, int rq)
+node query(ll index, ll l, ll r, ll lq, ll rq)
 {
-    if (lq > r || l > rq)
+    if (lq > r || l > rq) // rq...l or r...lq
     {
         return node(0, 0, 0);
     }
-    else if (lq >= l && r >= rq)
+    else if (l >= lq && rq >= r) // l...lq...rq..r
     {
         return t[index];
     }
-    int mid = (l + r) / 2;
+    ll mid = (l + r) / 2;
     return merge(query(2 * index, l, mid, lq, rq), query(2 * index + 1, mid + 1, r, lq, rq));
 }
 
 void solve()
 {
-    int n, q;
+    ll n, q;
     cin >> n >> q;
-    for (int i = 0; i < n; i++)
+    for (ll i = 0; i < n; i++)
     {
         cin >> arr[i];
     }
     build(1, 0, n - 1);
     while (q--)
     {
-        int ch;
+        ll ch;
         cin >> ch;
         if (ch == 3)
         {
-            int a, b;
+            ll a, b;
             cin >> a >> b;
             a--;
             b--;
@@ -114,31 +118,25 @@ void solve()
         }
         else
         {
-            if (ch == 1)
-            {
-                int a, b, x;
-                cin >> a >> b >> x;
-                a--;
-                b--;
-                ii p = make_pair(ch, x);
-                update(1, 0, n - 1, a, b, p);
-            }
-            else if (ch == 2)
-            {
-                int a, b, x;
-                cin >> a >> b >> x;
-                a--;
-                b--;
-                ii p = make_pair(ch, x);
-                update(1, 0, n - 1, a, b, p);
-            }
+            ll a, b, x;
+            cin >> a >> b >> x;
+            a--;
+            b--;
+            ii p = make_pair(ch, x);
+            update(1, 0, n - 1, a, b, p);
         }
+
         // gib appropriate queries
     }
+    // for (ll i = 0; i < 16; i++)
+    // {
+    //     cout << t[i].sum << endl;
+    // }
 }
+
 int main()
 {
-    int t = 1;
+    ll t = 1;
     while (t--)
     {
         solve();

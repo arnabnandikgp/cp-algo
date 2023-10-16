@@ -26,7 +26,7 @@ void update(int index, int l, int r, int pos, int val)
 
 int query(int index, int l, int r, int lq, int rq) // will return the max subseq length possible in that range
 {
-    if (rq < l || lq > rq)
+    if (rq < l || lq > r)
     {
         return 0;
     }
