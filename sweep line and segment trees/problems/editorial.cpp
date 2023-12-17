@@ -66,6 +66,7 @@ signed main()
         int x; cin >> x;
         T.update(1, 0, n - 1, i, x);
     }
+    
 
     cin >> q;
 
