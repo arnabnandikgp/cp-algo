@@ -3,35 +3,33 @@
 using namespace std;
 #define endl "\n"
 
-char arr[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-void solve()
+int INF = INT_MAX;
+int frogJump(int n, vector<int> a)
 {
-    string s;
-    cin >> s;
-    char r = s[0];
-    int c = s[1]-'0';
-    for (int i = 0; i < 8; i++)
+    vector<int> dp(n, INF);
+    dp[0] = 0, dp[1] = abs(a[1] - a[0]);
+    for (int i = 2; i < n; i++)
     {
-        if (c != i + 1)
-        {
-            cout << r << i + 1;
-            cout<<endl;
-        }
-        if (r != arr[i])
-        {
-            cout << arr[i]<<c ;
-            cout<<endl;
-        }
+        dp[i] = min(dp[i - 1] + abs(a[i] - a[i - 1]), dp[i - 2] + abs(a[i] - a[i - 2]));
     }
-
+    return dp[n - 1];
 }
 
 int main()
 {
-    int t;
+    ll t;
     cin >> t;
     while (t--)
     {
-        solve();
+        ll n;
+        cin >> n;
+        vector<int> input;
+        for (int i = 0; i < n; i++)
+        {
+            int k;
+            cin >> k;
+            input[i] = k;
+        }
+        frogJump(n,input);
     }
 }

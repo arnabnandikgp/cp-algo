@@ -20,7 +20,8 @@
         "numbers": "cpp",
         "iterator": "cpp",
         "scoped_allocator": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "cmath": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled",
     "C_Cpp.default.compilerPath": "/usr/bin/gcc"
