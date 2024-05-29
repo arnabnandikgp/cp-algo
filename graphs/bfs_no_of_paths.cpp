@@ -6,6 +6,8 @@ using ii = pair<int, int>;
 
 #define F first
 #define S second
+// if weights for each edge is given in that case we can always use a map<pair<ii,ii>,int> to store the pair of 
+// cordinates and the corresponding weight for the given map.
 // first for a grid and reaching a given point from another
 /*
 6 6
@@ -19,6 +21,10 @@ E.##.#
 
 int dx[] = {1, 0, -1, 0};
 int dy[] = {0, -1, 0, 1};
+
+// int dx[] = {2,1,-1,-2,-2,-1,1,2};
+// int dy[] = {-1,-2,-2,-1,1,2,2,1}  //for knight' move
+
 ll n, m;
 vector<string> arr;
 // ii dist[10000][10000];
@@ -47,6 +53,9 @@ void bfs(ii st) // passing the starting point for the bfs
             dist[i][j] = make_pair(1e9, 0);
         }
     }
+    // or the following maybe used for initialising the dist vector
+    // dist.assign(n, vector<ii>(m,make_pair(1e9,0)));
+
     dist[st.F][st.S] = make_pair(0, 1);
 
     queue<ii> q;
@@ -98,6 +107,25 @@ int main()
             }
         }
     }
+    // if the input as follows 
+    // 6 6
+    // S . # . . .
+    // . . . . . .
+    // # # # # . #
+    // E . # # . #
+    // . . # . . #
+    // # . . . . #
+    // //then the following way of taking input is to be used
+    // 
+    // for (int i = 0; i < n; i++)
+    // {
+    //   arr[i].resize(m);
+    //   for(int j=0; j<m;j++)
+    //   {
+    //     cin>>arr[i][j];
+    //   }
+    //
+    // }
     bfs(st);
     // to print the shortest distance between st and en
     vector<ii> path;
@@ -114,4 +142,6 @@ int main()
     // {
     //     cout<<v.F<<" "<<v.S<<endl;
     // }
+    // to print the number of shortest paths
+    // cout<< dist[en.F][en.S].S
 }
