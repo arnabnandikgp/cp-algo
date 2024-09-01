@@ -3,14 +3,20 @@
 using namespace std;
 #define endl "\n"
 
-bool check(int k)
+
+int k;
+bool check(int val)
 {
     // do operations of what u need.
+    // to find the lower bound k
+    if (val>=k) return true;
+    return false;
 }
 void solve()
 {
     int n;
     cin >> n;
+    cin >> k;
     vector<int> arr(n);
     for(int i=0;i<n;i++)
     {
@@ -24,7 +30,7 @@ void solve()
     while (lo <= hi)
     {
         int mid = (lo + hi) / 2;
-        if (arr[mid] == 0) // if(check(arr[mid]==0))   etc...
+        if (check(arr[mid])) // if(check(arr[mid]))   etc...
         {
             ans = mid;
             hi = mid - 1;
@@ -39,4 +45,9 @@ void solve()
 
 int main()
 {
+    int t; // number of test cases
+    while(t--)
+    {
+        solve();
+    }
 }
